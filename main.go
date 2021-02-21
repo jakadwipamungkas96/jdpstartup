@@ -30,6 +30,7 @@ func main() {
 	// ENDPOINT
 	api.POST("/registerusers", userHandler.RegisterUser)
 	api.POST("/sessions", userHandler.Login)
+	api.POST("/emailcheckers", userHandler.CheckEmailAvailability)
 
 	router.Run()
 
