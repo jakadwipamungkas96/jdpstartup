@@ -29,15 +29,8 @@ func main() {
 
 	// ENDPOINT
 	api.POST("/registerusers", userHandler.RegisterUser)
+	api.POST("/sessions", userHandler.Login)
 
 	router.Run()
-
-	// userInput := user.RegisterUserInput{}
-	// userInput.Name = "Tes Simpan dari services"
-	// userInput.Email = "contoh@gmail.com"
-	// userInput.Occupation = "anak langit"
-	// userInput.Password = "password"
-
-	// userService.RegisterUser(userInput)
 
 }
