@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"jdpstartup/auth"
 	"jdpstartup/handler"
 	"jdpstartup/user"
 	"log"
@@ -22,9 +24,13 @@ func main() {
 
 	userService := user.NewService(userRepo)
 
+	authService := auth.NewServiceToken()
+
+	fmt.Println(authService.GenerateToken(1001))
+
 	userService.SaveAva(1, "images/1-profile.png")
 
-	userHandler := handler.NewUserHandler(userService)
+	userHandler := handler.NewUserHandler(userService, authService)
 
 	router := gin.Default()
 	api := router.Group("/api/v1")
