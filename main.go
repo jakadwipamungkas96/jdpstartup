@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"jdpstartup/auth"
 	"jdpstartup/handler"
 	"jdpstartup/user"
@@ -25,8 +24,6 @@ func main() {
 	userService := user.NewService(userRepo)
 
 	authService := auth.NewServiceToken()
-
-	fmt.Println(authService.GenerateToken(1001))
 
 	userService.SaveAva(1, "images/1-profile.png")
 
