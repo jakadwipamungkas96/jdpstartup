@@ -11,6 +11,7 @@ type Service interface {
 	Login(input LoginInput) (User, error)
 	CheckAvailableEmail(input CheckEmailInput) (bool, error)
 	SaveAva(ID int, fileLocation string) (User, error)
+	GetUserByID(ID int) (User, error)
 }
 
 type service struct {
@@ -95,4 +96,16 @@ func (s *service) SaveAva(ID int, fileLocation string) (User, error) {
 
 	return updateUser, nil
 
+}
+
+func (s *service) GetUserByID(ID int) (User, error) {
+	user, err := s.repository.FindByID(ID)
+	if err != nil {
+		return user, err
+	}
+
+	if user.Id == 0 {
+		return user, errors.New("User Not Found")
+	}
+	return user, nil
 }
