@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"jdpstartup/auth"
+	"jdpstartup/campaign"
 	"jdpstartup/handler"
 	"jdpstartup/helper"
 	"jdpstartup/user"
@@ -24,9 +26,18 @@ func main() {
 	}
 
 	userRepo := user.NewRepo(db)
+	campaignRepo := campaign.NewRepo(db)
+
+	allCampaigns, err := campaignRepo.FindAll()
+
+	for _, campaign := range allCampaigns {
+		fmt.Println(campaign.Name)
+		if len(campaign.CampaignImages) > 0 {
+			fmt.Println(campaign.CampaignImages[0].FileName)
+		}
+	}
 
 	userService := user.NewService(userRepo)
-
 	authService := auth.NewServiceToken()
 
 	userService.SaveAva(1, "images/1-profile.png")
