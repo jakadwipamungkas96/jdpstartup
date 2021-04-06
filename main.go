@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"jdpstartup/auth"
 	"jdpstartup/campaign"
 	"jdpstartup/handler"
@@ -28,30 +27,35 @@ func main() {
 	userRepo := user.NewRepo(db)
 	campaignRepo := campaign.NewRepo(db)
 
-	allCampaigns, err := campaignRepo.FindAll()
+	// allCampaigns, err := campaignRepo.FindAll()
 
-	for _, campaign := range allCampaigns {
-		fmt.Println(campaign.Name)
-		if len(campaign.CampaignImages) > 0 {
-			fmt.Println(campaign.CampaignImages[0].FileName)
-		}
-	}
+	// for _, campaign := range allCampaigns {
+	// 	fmt.Println(campaign.Name)
+	// 	if len(campaign.CampaignImages) > 0 {
+	// 		fmt.Println(campaign.CampaignImages[0].FileName)
+	// 	}
+	// }
 
 	userService := user.NewService(userRepo)
+	campaignService := campaign.NewService(campaignRepo)
 	authService := auth.NewServiceToken()
 
 	userService.SaveAva(1, "images/1-profile.png")
 
 	userHandler := handler.NewUserHandler(userService, authService)
+	campaignHandler := handler.NewCampaginHandler(campaignService)
 
 	router := gin.Default()
 	api := router.Group("/api/v1")
 
-	// ENDPOINT
+	// ENDPOINT USER
 	api.POST("/registerusers", userHandler.RegisterUser)
 	api.POST("/sessions", userHandler.Login)
 	api.POST("/emailcheckers", userHandler.CheckEmailAvailability)
 	api.POST("/uploadavatar", authMiddleware(authService, userService), userHandler.UploadAvatar)
+
+	// ENDPOINT CAMPAIGN
+	api.GET("/campaigns", campaignHandler.GetCampaigns)
 
 	router.Run()
 
