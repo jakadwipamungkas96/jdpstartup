@@ -28,11 +28,12 @@ func FormatCampaign(campaign Campaign) CampaignFormatter {
 }
 
 func FormatCampaignMulti(campaigns []Campaign) []CampaignFormatter {
-	if len(campaigns) == 0 {
-		return []CampaignFormatter{}
-	}
+	// if len(campaigns) == 0 {
+	// 	return []CampaignFormatter{}
+	// }
 
-	var campaignMultiFormatter []CampaignFormatter
+	// var campaignMultiFormatter []CampaignFormatter
+	campaignMultiFormatter := []CampaignFormatter{}
 
 	for _, campaign := range campaigns {
 		campaignFormatter := FormatCampaign(campaign)
