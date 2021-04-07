@@ -27,15 +27,6 @@ func main() {
 	userRepo := user.NewRepo(db)
 	campaignRepo := campaign.NewRepo(db)
 
-	// allCampaigns, err := campaignRepo.FindAll()
-
-	// for _, campaign := range allCampaigns {
-	// 	fmt.Println(campaign.Name)
-	// 	if len(campaign.CampaignImages) > 0 {
-	// 		fmt.Println(campaign.CampaignImages[0].FileName)
-	// 	}
-	// }
-
 	userService := user.NewService(userRepo)
 	campaignService := campaign.NewService(campaignRepo)
 	authService := auth.NewServiceToken()
@@ -46,6 +37,9 @@ func main() {
 	campaignHandler := handler.NewCampaginHandler(campaignService)
 
 	router := gin.Default()
+
+	// ENDPOINT Images
+	router.Static("/images", "./images")
 	api := router.Group("/api/v1")
 
 	// ENDPOINT USER
