@@ -19,14 +19,15 @@ func NewCampaginHandler(service campaign.Service) *campaignHandler {
 
 func (h *campaignHandler) GetCampaigns(c *gin.Context) {
 	userID, _ := strconv.Atoi(c.Query("user_id")) //convert string to int
-	campaign, err := h.service.GetCampaigns(userID)
+	campaigns, err := h.service.GetCampaigns(userID)
 
 	if err != nil {
 		response := helper.APIResponse("Error get campaign !", http.StatusBadRequest, "error", nil)
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
-	response := helper.APIResponse("List of campaign !", http.StatusBadRequest, "success", campaign)
+
+	response := helper.APIResponse("List of campaign !", http.StatusBadRequest, "success", campaign.FormatCampaignMulti(campaigns))
 	c.JSON(http.StatusOK, response)
 
 }
